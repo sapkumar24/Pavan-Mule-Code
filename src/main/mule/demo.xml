@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e1d0ab4b-01b0-4462-93c7-59312fc566fa" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="demoFlow" doc:id="b3545684-2fd5-46d9-919e-f43b7fd65c7d" >
+		<http:listener doc:name="Listener" doc:id="fb5cfbca-4bef-4e13-bc42-70658ccb7f39" config-ref="HTTP_Listener_config" path="/apple"/>
+		<ee:transform doc:name="Transform Message" doc:id="4879ef57-d620-4dd3-b883-dba935a19c61" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="0a2f4d53-0dd1-40ac-a4dd-0a0a04df5d88" message="hi"/>
+	</flow>
+</mule>
